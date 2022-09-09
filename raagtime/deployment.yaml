@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: raagtime
+  name: raagtime
+  labels:
+    app: raagtime
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: raagtime
+  template:
+    metadata:
+      labels:
+        app: raagtime
+    spec:
+      initContainers:
+        - name: await-migrations
+          image: dbackeus/raagtime:amd64-urls-for-real
+          envFrom: [configMapRef: { name: env }]
+          command: ["bin/rails", "db:abort_if_pending_migrations"]
+      containers:
+        - name: web
+          image: dbackeus/raagtime:amd64-urls-for-real
+          envFrom: [configMapRef: { name: env }]
+          command: ["bin/rails", "server", "-b", "0.0.0.0"]
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /robots.txt
+              port: 3000
+              scheme: HTTP
