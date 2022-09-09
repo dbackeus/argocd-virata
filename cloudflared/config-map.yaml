@@ -24,10 +24,10 @@ data:
     ingress:
     - hostname: raagtime.com
       service: http://web.raagtime.svc.cluster.local:3000
-    - hostname: kubernetes.perfectskies.com
-      service: tcp://kubernetes.default.svc:6443
+    - hostname: argocd.perfectskies.com
+      service: https://argocd-server.argocd.svc.cluster.local:443
       originRequest:
-        proxyType: socks
+        noTLSVerify: true
     - hostname: hello.perfectskies.com
       service: http://hello-app-service.default.svc.cluster.local:8000
     - hostname: grafana.perfectskies.com
