@@ -17,12 +17,12 @@ spec:
     spec:
       initContainers:
         - name: await-migrations
-          image: dbackeus/raagtime:sha-b179590
+          image: dbackeus/raagtime:sha-1bf00d61af121a39b2a525057d74e612181ea53f
           envFrom: [configMapRef: { name: env }]
           command: ["bin/rails", "db:abort_if_pending_migrations"]
       containers:
         - name: web
-          image: dbackeus/raagtime:sha-b179590
+          image: dbackeus/raagtime:sha-1bf00d61af121a39b2a525057d74e612181ea53f
           envFrom: [configMapRef: { name: env }]
           command: ["bin/rails", "server", "-b", "0.0.0.0"]
           ports:
