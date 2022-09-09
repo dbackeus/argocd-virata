@@ -6,13 +6,13 @@ on:
       - deploy
 
 jobs:
-  myEvent:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Print the payload
+      - name: Patch the deployment.yaml with new image tag
         run: |
           app=${{ github.event.client_payload.application }}
           image=${{ github.event.client_payload.image }}
